@@ -6,5 +6,7 @@ data/sliced_movies/*
 !data/sliced_movies/.keep
 data/merged_icons/*
 !data/merged_icons/.keep
+data/grouped_icons/*
+!data/grouped_icons/.keep
 
 tmp
