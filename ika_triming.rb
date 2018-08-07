@@ -7,8 +7,6 @@ def crop_icons(filename:, distdir:)
   original = Magick::Image.read(filename).first
   prefix = distdir.gsub('/','_') + File.basename(filename, ".*")
 
-  puts(prefix)
-
   image = original.crop(356, 15, 53, 60)
   image.write("#{distdir}/#{prefix}-1.jpg")
 
@@ -40,9 +38,10 @@ movie_name = sliced_images_dirname.split('/').last
 dist_dir = "data/icons/#{movie_name}"
 FileUtils.mkdir_p dist_dir
 
+puts "generate icons from #{sliced_images_dirname} to #{dist_dir}"
+
 Dir.entries(sliced_images_dirname).each do |filename|
   next unless File.extname(filename)==".jpg"
   filepath = "#{sliced_images_dirname}/#{filename}"
-  puts filepath
   crop_icons(filename: filepath ,distdir: dist_dir)
 end
