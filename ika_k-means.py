@@ -7,7 +7,11 @@ from sklearn.cluster import KMeans
 
 cluster_count = 4
 
-feature = np.array([data.imread("./icons/" + path) for path in os.listdir('./icons')])
+origin_dir = './data/merged_icons/'
+dist_dir = './data/grouped_icons/'
+origin_images =  [path for path in os.listdir(origin_dir) if not path.startswith('.')]
+
+feature = np.array([data.imread(origin_dir + path) for path in origin_images])
 feature = feature.reshape(len(feature), -1).astype(np.float64)
 
 print('data reshape completed')
@@ -18,12 +22,12 @@ print('clustering completed')
 
 labels = model.labels_
 
-for label, path in zip(labels, os.listdir('./icons')):
-    dist_dir_name = "icon_groups"
-    dirpath = dist_dir_name + "/" + str(label)
+print(labels)
+
+for label, path in zip(labels, origin_images):
+    dirpath = dist_dir + str(label)
     if not os.path.isdir(dirpath):
         os.makedirs(dirpath)
-    shutil.copyfile("./icons/" + path, dist_dir_name + "/" + str(label) + "/" + path)
-    print(label, path)
+    shutil.copyfile(origin_dir + path, dist_dir + str(label) + "/" + path)
 
 print('all completed')
