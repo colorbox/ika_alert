@@ -1,20 +1,30 @@
 # ika_alert
 
-
 ## USAGE 
 
-read this
-https://www.tensorflow.org/hub/tutorials/image_retraining
+### place captured movies 
 
-After train data, in this directory.
+Save your splatoon2 battle movie under 'data/movies'.
+
+### slice movie into images
+make slice movie with ffmpeg
+'''
+ffmpeg -i ./data/movies/XXX.mp4  -r 1 -f image2 ./data/sliced_movies/XXX/%06d.jpg
+'''
+
+### pretreatment with your hand
+remove some images from your sliced images like below
+ 
+ - looking map
+ - pinch mode
+ - before start battle and after end battle
+
+### trim icons
+
+trim icons from sliced image with below command
 
 ```
-mv /tmp/output_graph.pb ./
-mv /tmp/output_labels.txt ./
+ruby ./ika_triming.rb data/sliced_movies/XXX
 ```
 
-you can recognize images like below.
-```
-python label_image.py --graph=./output_graph.pb --labels=./output_labels.txt --input_layer=Placeholder --output_layer=final_result --image=./../ika_icons/special/000209-2.jpg
-```
-image option take icon image.
+After that there are icon images in `data/icons/XXX` dir.
