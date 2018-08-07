@@ -1,1 +1,8 @@
-/data
+data/icons/*
+!data/icons/.keep
+data/movies/*
+!data/movies/.keep
+data/sliced_movies/*
+!data/sliced_movies/.keep
+
+tmp
