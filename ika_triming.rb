@@ -5,7 +5,7 @@ require 'rubygems'
 
 def crop_icons(filename:, distdir:)
   original = Magick::Image.read(filename).first
-  prefix = distdir.gsub('/','_') + File.basename(filename, ".*")
+  prefix = "#{distdir.gsub('/','_')}_#{File.basename(filename, ".*")}"
 
   image = original.crop(356, 15, 53, 60)
   image.write("#{distdir}/#{prefix}-1.jpg")
