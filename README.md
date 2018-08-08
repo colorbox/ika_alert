@@ -31,9 +31,7 @@ After that there are icon images in `data/icons/XXX` dir.
 
 ### clustering icons
 
-mv or cp icons from `icons/XXX` dir into `merged_icons` dir.
-
-After icon moving, let's classify with k-means. 
+Let's classify with k-means. 
 
 ```
 python ./ika_k-means.py
