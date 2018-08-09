@@ -8,9 +8,9 @@ Save your splatoon2 battle movie under 'data/movies'.
 
 ### slice movie into images
 make slice movie with ffmpeg
-'''
+```
 ffmpeg -i ./data/movies/XXX.mp4  -r 1 -f image2 ./data/sliced_movies/XXX/%06d.jpg
-'''
+```
 
 ### pretreatment with your hand
 remove some images from your sliced images like below.
