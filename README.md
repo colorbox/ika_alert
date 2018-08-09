@@ -4,7 +4,7 @@
 
 ### place captured movies 
 
-Save your splatoon2 battle movie under 'data/movies'.
+Save your splatoon2 battle movie under `data/movies`.
 
 ### slice movie into images
 make slice movie with ffmpeg
