@@ -45,4 +45,15 @@ They may be clustered as below.
  - special
  
 
- 
+### generate learned model
+
+You can generate learned data with below command.
+```
+python3 ./create_svm_classifyier.py
+```
+
+And alsp, you can test your model with below command.
+
+```
+python3 ./test_created_svm_machine.py
+```
