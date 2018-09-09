@@ -7,29 +7,42 @@ def crop_icons(filename:, distdir:)
   original = Magick::Image.read(filename).first
   prefix = "#{distdir.gsub('/','_')}_#{File.basename(filename, ".*")}"
 
-  image = original.crop(356, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-1.jpg")
+  width = original.columns
+  height = original.rows
 
-  image = original.crop(356 + 53 + 5, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-2.jpg")
+  icon_width = 53.0/1280.0 * width
+  icon_height = 60.0/720.0 * height
 
-  image = original.crop(356 + (53 + 5) * 2, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-3.jpg")
+  icon_start_column_gap = (53.0+5.0)/1280.0 * width
 
-  image = original.crop(356 + (53 + 5) * 3 - 1, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-4.jpg")
+  icon_rows_from = 16.0/720.0 * height
 
-  image = original.crop(356 + (53 + 5) * 3 + 167, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-5.jpg")
+  friends_start_column = 356.0/1280.0 * width
+  enemy_start_column = 697.0/1280.0 * width
 
-  image = original.crop(356 + (53 + 5) * (3+1) + 167, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-6.jpg")
+  image = original.crop(friends_start_column, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-1.jpg")
 
-  image = original.crop(356 + (53 + 5) * (3+2) + 167, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-7.jpg")
+  image = original.crop(friends_start_column + icon_start_column_gap * 1, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-2.jpg")
 
-  image = original.crop(356 + (53 + 5) * (3+3) + 167 - 1, 15, 53, 60)
-  image.write("#{distdir}/#{prefix}-8.jpg")
+  image = original.crop(friends_start_column + icon_start_column_gap * 2, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-3.jpg")
+
+  image = original.crop(friends_start_column + icon_start_column_gap * 3 - 1, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-4.jpg")
+
+  image = original.crop(enemy_start_column, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-5.jpg")
+
+  image = original.crop(enemy_start_column + icon_start_column_gap * 1, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-6.jpg")
+
+  image = original.crop(enemy_start_column + icon_start_column_gap * 2, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-7.jpg")
+
+  image = original.crop(enemy_start_column + icon_start_column_gap * 3 - 1, icon_rows_from, icon_width, icon_height)
+  image.resize(80,90).write("#{distdir}/#{prefix}-8.jpg")
 end
 
 sliced_images_dirname = ARGV[0]
