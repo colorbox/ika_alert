@@ -30,6 +30,7 @@ def save_image(image):
 
 def save_fixed_name_image(image,name):
     filepath = "./data/watching/" + name + ".png"
+    image = cv2.resize(image,(80,90))
     cv2.imwrite(filepath, image)
     return filepath
 
@@ -39,11 +40,11 @@ def main():
 
     ORG_WINDOW_NAME = "movie"
 
-    DEVICE_ID = 0
+    DEVICE_ID = 1
 
     # capture
     # cap = cv2.VideoCapture(DEVICE_ID)
-    cap = cv2.VideoCapture('./data/movies/2_t.mp4')
+    cap = cv2.VideoCapture('./data/movies/8.mov')
 
     end_flag, c_frame = cap.read()
 
@@ -55,36 +56,54 @@ def main():
         # フレーム表示
         cv2.imshow(ORG_WINDOW_NAME, c_frame)
 
+        print(c_frame.shape)
+        width = c_frame.shape[1]
+        height = c_frame.shape[0]
+
+        icon_width = 53.0/1280.0 * width
+        icon_height = 60.0/720.0 * height
+
+        icon_start_column_gap = (53.0+5.0)/1280.0 * width
+
+        icon_rows_from = 16.0/720.0 * height
+
+        friends_start_column = 356.0/1280.0 * width
+        enemy_start_column = 697.0/1280.0 * width
+
+        print((int(icon_width), int(icon_height)))
+
+
+        cv2.getRectSubPix
         # 矩形切り取り
-        rectangle1 = cv2.getRectSubPix(c_frame, (53, 60),(356 + (53/2), 15 + (60/2)))
+        rectangle1 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(friends_start_column + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle1,"1")
         r1 = result_from_fixed("1")
 
-        rectangle2 = cv2.getRectSubPix(c_frame, (53, 60),(356 + 53 + 5 + (53/2), 15 + (60/2)))
+        rectangle2 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(friends_start_column + icon_start_column_gap + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle2, "2")
         r2 = result_from_fixed("2")
 
-        rectangle3 = cv2.getRectSubPix(c_frame, (53, 60),(356 + (53 + 5) * 2 + (53/2), 15 + (60/2)))
+        rectangle3 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(friends_start_column + (icon_start_column_gap) * 2 + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle3, "3")
         r3 = result_from_fixed("3")
 
-        rectangle4 = cv2.getRectSubPix(c_frame, (53, 60),(356 + (53 + 5) * 3 + (53/2), 15 + (60/2)))
+        rectangle4 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(friends_start_column + (icon_start_column_gap) * 3 + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle4, "4")
         r4 = result_from_fixed("4")
 
-        rectangle5 = cv2.getRectSubPix(c_frame, (53, 60),(356 + (53 + 5) * 3 + 167 + (53/2), 15 + (60/2)))
+        rectangle5 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(enemy_start_column + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle5, "5")
         r5 = result_from_fixed("5")
 
-        rectangle6 = cv2.getRectSubPix(c_frame, (53, 60),(356 + (53 + 5) * (3 + 1) + 167 + + (53/2), 15 + (60/2)))
+        rectangle6 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(enemy_start_column + (icon_start_column_gap) * (1) + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle6, "6")
         r6 = result_from_fixed("6")
 
-        rectangle7 = cv2.getRectSubPix(c_frame, (53, 60),(356 + (53 + 5) * (3 + 2) + 167 + + (53/2), 15 + (60/2)))
+        rectangle7 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(enemy_start_column + (icon_start_column_gap) * (2) + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle7, "7")
         r7 = result_from_fixed("7")
 
-        rectangle8 = cv2.getRectSubPix(c_frame, (53, 60),(356 + (53 + 5) * (3 + 3) + 167 + + (53/2), 15 + (60/2)))
+        rectangle8 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(enemy_start_column + (icon_start_column_gap) * (3) + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle8, "8")
         r8 = result_from_fixed("8")
 
