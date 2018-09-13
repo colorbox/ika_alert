@@ -6,5 +6,10 @@ data/sliced_movies/*
 !data/sliced_movies/.keep
 data/grouped_icons/*
 !data/grouped_icons/.keep
+data/grouped_icons1/*
+data/icons_from_opencv/*
+!data/pinch/.keep
+data/pinch/*
+data/watching/*
 
 tmp
