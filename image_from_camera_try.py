@@ -4,6 +4,26 @@ import cv2
 import numpy as np
 import time
 
+def is_friend_pinch(template):
+    img = cv2.imread('friend_pinch1.png',0)
+
+    res = cv2.matchTemplate(img,template,cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    if max_val > 0.95:
+        return True
+    else:
+        return False
+
+def is_enemy_pinch(template):
+    img = cv2.imread('enemy_pinch2.png',0)
+
+    res = cv2.matchTemplate(img,template,cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    if max_val > 0.95:
+        return True
+    else:
+        return False
+
 def is_dead_with_rtree(image, bin_n=32):
     rtree = cv2.ml.RTrees_load("dead_train.xml")
     reshaped_image = image.reshape(image.shape[0] * image.shape[1] * 3)
@@ -44,7 +64,7 @@ def main():
 
     # capture
     # cap = cv2.VideoCapture(DEVICE_ID)
-    cap = cv2.VideoCapture('./data/movies/8.mov')
+    cap = cv2.VideoCapture('./data/movies/8_t.mov')
 
     end_flag, c_frame = cap.read()
 
@@ -56,7 +76,7 @@ def main():
         # フレーム表示
         cv2.imshow(ORG_WINDOW_NAME, c_frame)
 
-        print(c_frame.shape)
+        # print(c_frame.shape)
         width = c_frame.shape[1]
         height = c_frame.shape[0]
 
@@ -70,10 +90,6 @@ def main():
         friends_start_column = 356.0/1280.0 * width
         enemy_start_column = 697.0/1280.0 * width
 
-        print((int(icon_width), int(icon_height)))
-
-
-        cv2.getRectSubPix
         # 矩形切り取り
         rectangle1 = cv2.getRectSubPix(c_frame, (int(icon_width), int(icon_height)),( int(friends_start_column + (icon_width/2)), int(icon_rows_from + (icon_height/2))))
         save_fixed_name_image(rectangle1,"1")
@@ -107,13 +123,18 @@ def main():
         save_fixed_name_image(rectangle8, "8")
         r8 = result_from_fixed("8")
 
-        print(r1,r2,r3,r4,r5,r6,r7,r8)
-        print("------------")
+        # print(r1,r2,r3,r4,r5,r6,r7,r8)
+        # print("------------")
 
-        if (r1+r2+r3+r4 < r5+r6+r7+r8):
-            print("人数有利")
-        elif (r1+r2+r3+r4 > r5+r6+r7+r8):
-            print("人数不利")
+        # print(type(c_frame))
+
+        gray = cv2.cvtColor(c_frame, cv2.COLOR_BGR2GRAY)
+        print(is_enemy_pinch(gray),is_friend_pinch(gray))
+
+        # if (r1+r2+r3+r4 < r5+r6+r7+r8):
+        #     print("人数有利")
+        # elif (r1+r2+r3+r4 > r5+r6+r7+r8):
+        #     print("人数不利")
 
         # wait for esc key
         key = cv2.waitKey(INTERVAL)
