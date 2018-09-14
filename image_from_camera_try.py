@@ -4,25 +4,25 @@ import cv2
 import numpy as np
 import time
 
-def is_friend_pinch(template):
-    img = cv2.imread('friend_pinch1.png',0)
+def is_friend_pinch(template, image_name):
+    img = cv2.imread(image_name,0)
 
     res = cv2.matchTemplate(img,template,cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
     if max_val > 0.95:
-        return True
+        return 1
     else:
-        return False
+        return 0
 
-def is_enemy_pinch(template):
-    img = cv2.imread('enemy_pinch2.png',0)
-
+def is_enemy_pinch(template, image_name):
+    img = cv2.imread(image_name,0)
     res = cv2.matchTemplate(img,template,cv2.TM_CCOEFF_NORMED)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    _, max_val, _, _ = cv2.minMaxLoc(res)
     if max_val > 0.95:
-        return True
+        return 1
     else:
-        return False
+        return 0
+
 
 def is_dead_with_rtree(image, bin_n=32):
     rtree = cv2.ml.RTrees_load("dead_train.xml")
@@ -64,7 +64,8 @@ def main():
 
     # capture
     # cap = cv2.VideoCapture(DEVICE_ID)
-    cap = cv2.VideoCapture('./data/movies/8_t.mov')
+    # cap = cv2.VideoCapture('./data/movies/8_t_f.mov')
+    cap = cv2.VideoCapture('./data/movies/8_t_e.mov')
 
     end_flag, c_frame = cap.read()
 
@@ -129,8 +130,10 @@ def main():
         # print(type(c_frame))
 
         gray = cv2.cvtColor(c_frame, cv2.COLOR_BGR2GRAY)
-        print(is_enemy_pinch(gray),is_friend_pinch(gray))
+        # print(is_enemy_pinch(gray),is_friend_pinch(gray))
+        print(is_enemy_pinch(gray,'enemy_pinch3.png'),is_enemy_pinch(gray,'enemy_pinch4.png'),is_enemy_pinch(gray,'enemy_pinch5.png'))
 
+        # print(is_friend_pinch(gray,'friend_pinch1.png'),is_friend_pinch(gray,'friend_pinch3.png'),is_friend_pinch(gray,'friend_pinch4.png'))
         # if (r1+r2+r3+r4 < r5+r6+r7+r8):
         #     print("人数有利")
         # elif (r1+r2+r3+r4 > r5+r6+r7+r8):
