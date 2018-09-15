@@ -10,6 +10,5 @@ data/grouped_icons1/*
 data/icons_from_opencv/*
 !data/pinch/.keep
 data/pinch/*
-data/watching/*
 
 tmp
