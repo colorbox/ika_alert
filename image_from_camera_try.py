@@ -5,6 +5,7 @@ import numpy as np
 import time
 import imutils
 from imutils.video import FileVideoStream
+from imutils.video import FPS
 import argparse
 
 def is_friend_pinch(template):
@@ -215,6 +216,7 @@ def main():
     args = vars(ap.parse_args())
 
     fvs = FileVideoStream(args["video"]).start()
+    fps = FPS().start()
 
     # ウィンドウの準備
     cv2.namedWindow(ORG_WINDOW_NAME, cv2.WINDOW_NORMAL)
@@ -230,11 +232,16 @@ def main():
         else:
             hoge = calcurate_icon_status(gray)
         print(hoge)
+        cv2.putText(c_frame, "Queue Size: {}".format(fvs.Q.qsize()),
+		(10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         cv2.imshow(ORG_WINDOW_NAME, c_frame)
-        cv2.waitKey(1)
+        cv2.waitKey(50)
+        fps.update()
 
+    fps.stop()
     cv2.destroyAllWindows()
-    cap.release()
-
+    print("[INFO] elasped time: {:.2f}".format(fps.elapsed()))
+    print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+    
 if __name__ == '__main__':
     main()
