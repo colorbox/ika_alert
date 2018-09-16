@@ -218,12 +218,10 @@ def main():
     # cap = cv2.VideoCapture('./data/movies/8_t_e.mov')
     # cap = cv2.VideoCapture('/Volumes/test/2018-09-12-2.mov')
 
-
     # fvs = FileVideoStream(args["video"]).start()
     fvs = FileVideoStream('/Volumes/test/2018-09-12-2.mov').start()
-    
 
-    end_flag, c_frame = cap.read()
+    # end_flag, c_frame = cap.read()
 
     # ウィンドウの準備
     cv2.namedWindow(ORG_WINDOW_NAME, cv2.WINDOW_NORMAL)
@@ -241,44 +239,6 @@ def main():
         print(hoge)
         cv2.imshow(ORG_WINDOW_NAME, c_frame)
         cv2.waitKey(1)
-
-
-    # # 変換処理ループ
-    # while end_flag == True:
-
-    #     hoge = []
-    #     gray = cv2.cvtColor(c_frame, cv2.COLOR_BGR2GRAY)
-    #     if is_enemy_pinch(gray):
-    #         hoge = calcurate_icon_status_enemy_pinch(c_frame)
-    #     elif is_friend_pinch(gray):
-    #         hoge = calcurate_icon_status_friend_pinch(c_frame)
-    #     else:
-    #         hoge = calcurate_icon_status(gray)
-    #     print(hoge)
-
-    #     # print(type(c_frame))
-
-
-    #     # print(is_enemy_pinch(gray))
-    #     # print(is_friend_pinch(gray))
-
-
-    #     # if (r1+r2+r3+r4 < r5+r6+r7+r8):
-    #     #     print("人数有利")
-    #     # elif (r1+r2+r3+r4 > r5+r6+r7+r8):
-    #     #     print("人数不利")
-
-    #     # wait for esc key
-    #     # フレーム表示
-    #     cv2.imshow(ORG_WINDOW_NAME, c_frame)
-    #     key = cv2.waitKey(INTERVAL)
-    #     if key == ESC_KEY:
-    #         print("hogehoge")
-    #         for i in 10:
-    #             end_flag, c_frame = cap.read()
-
-    #     # read next frame
-    #     end_flag, c_frame = cap.read()
 
     cv2.destroyAllWindows()
     cap.release()
