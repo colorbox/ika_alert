@@ -204,9 +204,6 @@ def calcurate_icon_status(c_frame):
 
 
 def main():
-    ESC_KEY = 27     # Escキー
-    INTERVAL= 16     # 待ち時間
-
     ORG_WINDOW_NAME = "movie"
     ICON_MOVIE = "icon"
 
@@ -217,18 +214,7 @@ def main():
 	help="path to input video file")
     args = vars(ap.parse_args())
 
-
-    # capture
-    # cap = cv2.VideoCapture(DEVICE_ID)
-    # cap = cv2.VideoCapture('./data/movies/8.mov')
-    # cap = cv2.VideoCapture('./data/movies/8_t_f.mov')
-    # cap = cv2.VideoCapture('./data/movies/8_t_e.mov')
-    # cap = cv2.VideoCapture('/Volumes/test/2018-09-12-2.mov')
-
     fvs = FileVideoStream(args["video"]).start()
-    # fvs = FileVideoStream('/Volumes/test/2018-09-12-2.mov').start()
-
-    # end_flag, c_frame = cap.read()
 
     # ウィンドウの準備
     cv2.namedWindow(ORG_WINDOW_NAME, cv2.WINDOW_NORMAL)
