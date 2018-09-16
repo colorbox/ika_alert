@@ -5,6 +5,7 @@ import numpy as np
 import time
 import imutils
 from imutils.video import FileVideoStream
+import argparse
 
 def is_friend_pinch(template):
     return (detect_image(template,'template_images/friend_pinch1.png') or detect_image(template,'template_images/friend_pinch2.png') or detect_image(template,'template_images/friend_pinch3.png'))
@@ -211,6 +212,12 @@ def main():
 
     DEVICE_ID = 1
 
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-v", "--video", required=True,
+	help="path to input video file")
+    args = vars(ap.parse_args())
+
+
     # capture
     # cap = cv2.VideoCapture(DEVICE_ID)
     # cap = cv2.VideoCapture('./data/movies/8.mov')
@@ -218,8 +225,8 @@ def main():
     # cap = cv2.VideoCapture('./data/movies/8_t_e.mov')
     # cap = cv2.VideoCapture('/Volumes/test/2018-09-12-2.mov')
 
-    # fvs = FileVideoStream(args["video"]).start()
-    fvs = FileVideoStream('/Volumes/test/2018-09-12-2.mov').start()
+    fvs = FileVideoStream(args["video"]).start()
+    # fvs = FileVideoStream('/Volumes/test/2018-09-12-2.mov').start()
 
     # end_flag, c_frame = cap.read()
 
