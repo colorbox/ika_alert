@@ -206,6 +206,7 @@ def calcurate_icon_status(c_frame):
 
 def main():
     ORG_WINDOW_NAME = "movie"
+    ALERT_WINDOW = "ALERT_WINDOW"
     ICON_MOVIE = "icon"
 
     DEVICE_ID = 1
@@ -220,6 +221,7 @@ def main():
 
     # ウィンドウの準備
     cv2.namedWindow(ORG_WINDOW_NAME, cv2.WINDOW_NORMAL)
+    cv2.namedWindow(ALERT_WINDOW, cv2.WINDOW_NORMAL)
     # cv2.namedWindow(ICON_MOVIE, cv2.WINDOW_NORMAL)
 
     while fvs.more():
@@ -235,8 +237,31 @@ def main():
         cv2.putText(c_frame, "Queue Size: {}".format(fvs.Q.qsize()),
 		(10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         cv2.imshow(ORG_WINDOW_NAME, c_frame)
+
+        heir = np.zeros((100,200),np.uint8);
+        heir = cv2.cvtColor(heir, cv2.COLOR_GRAY2RGB)
+
+        x2=10
+        y2=20
+        w2=30
+        h2=40
+        if hoge[0] + hoge[1] + hoge[2] + hoge[3] > hoge[4] + hoge[5] + hoge[6] + hoge[7]:
+            print('不利')
+            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,255),5)
+        elif  hoge[0] + hoge[1] + hoge[2] + hoge[3] < hoge[4] + hoge[5] + hoge[6] + hoge[7]:
+            print('有利')
+            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,255,0),5)
+        else:
+            print('同率')
+            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),5)
+
+        cv2.imshow(ALERT_WINDOW,heir);
+
+
+
         cv2.waitKey(50)
         fps.update()
+
 
     fps.stop()
     cv2.destroyAllWindows()
