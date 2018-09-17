@@ -14,6 +14,9 @@ def is_friend_pinch(template):
 def is_enemy_pinch(template):
     return (detect_image(template,'template_images/enemy_pinch1.png') or detect_image(template,'template_images/enemy_pinch2.png') or detect_image(template,'template_images/enemy_pinch3.png'))
 
+def is_opening_map(template):
+    return detect_image(template, 'template_images/map.png')
+
 def detect_image(template, image_name):
     img = cv2.imread(image_name,0)
 
@@ -234,6 +237,7 @@ def main():
         else:
             hoge = calcurate_icon_status(gray)
         print(hoge)
+        print(is_opening_map(gray))
         cv2.putText(c_frame, "Queue Size: {}".format(fvs.Q.qsize()),
 		(10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         cv2.imshow(ORG_WINDOW_NAME, c_frame)
@@ -251,6 +255,9 @@ def main():
         elif  hoge[0] + hoge[1] + hoge[2] + hoge[3] < hoge[4] + hoge[5] + hoge[6] + hoge[7]:
             print('有利')
             cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,255,0),5)
+        elif is_opening_map(gray):
+            print('マップ閲覧中:不明')
+            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),5)
         else:
             print('同率')
             cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),5)
