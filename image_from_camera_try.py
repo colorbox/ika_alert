@@ -4,7 +4,6 @@ import cv2
 import numpy as np
 import time
 import imutils
-from imutils.video import FileVideoStream
 from imutils.video import FPS
 import argparse
 
@@ -219,53 +218,60 @@ def main():
 	help="path to input video file")
     args = vars(ap.parse_args())
 
-    fvs = FileVideoStream(args["video"]).start()
+    cap = cv2.VideoCapture(DEVICE_ID)
     fps = FPS().start()
+
+    x=0
+    y=0
+    w=300
+    h=300
+
+    heir = np.zeros((100,200),np.uint8);
+
+    black = cv2.cvtColor(heir, cv2.COLOR_GRAY2RGB)
+    cv2.rectangle(black,(x,y),(x+w,y+h),(0,0,0),-1)
+
+    red = cv2.cvtColor(heir, cv2.COLOR_GRAY2RGB)
+    cv2.rectangle(red,(x,y),(x+w,y+h),(0,0,255),-1)
+
+    green = cv2.cvtColor(heir, cv2.COLOR_GRAY2RGB)
+    cv2.rectangle(green,(x,y),(x+w,y+h),(0,255,0),-1)
 
     # ウィンドウの準備
     cv2.namedWindow(ORG_WINDOW_NAME, cv2.WINDOW_NORMAL)
     cv2.namedWindow(ALERT_WINDOW, cv2.WINDOW_NORMAL)
-    # cv2.namedWindow(ICON_MOVIE, cv2.WINDOW_NORMAL)
 
-    while fvs.more():
-        c_frame = fvs.read()
+    end_flag = False
+    while end_flag:
+        end_flag, c_frame = cap.read()
         gray = cv2.cvtColor(c_frame, cv2.COLOR_BGR2GRAY)
         if is_enemy_pinch(gray):
             hoge = calcurate_icon_status_enemy_pinch(c_frame)
         elif is_friend_pinch(gray):
             hoge = calcurate_icon_status_friend_pinch(c_frame)
         else:
-            hoge = calcurate_icon_status(gray)
+            hoge = calcurate_icon_status(c_frame)
         print(hoge)
         print(is_opening_map(gray))
-        cv2.putText(c_frame, "Queue Size: {}".format(fvs.Q.qsize()),
-		(10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         cv2.imshow(ORG_WINDOW_NAME, c_frame)
 
-        heir = np.zeros((100,200),np.uint8);
-        heir = cv2.cvtColor(heir, cv2.COLOR_GRAY2RGB)
-
-        x2=0
-        y2=0
-        w2=300
-        h2=300
         if hoge[0] + hoge[1] + hoge[2] + hoge[3] > hoge[4] + hoge[5] + hoge[6] + hoge[7]:
             print('不利')
-            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,255),5)
+            cv2.imshow(ALERT_WINDOW,red)
         elif  hoge[0] + hoge[1] + hoge[2] + hoge[3] < hoge[4] + hoge[5] + hoge[6] + hoge[7]:
             print('有利')
-            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,255,0),-1)
+            cv2.imshow(ALERT_WINDOW,green);
+
         elif is_opening_map(gray):
             print('マップ閲覧中:不明')
-            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),-1)
+            cv2.imshow(ALERT_WINDOW,black);
         else:
             print('同率')
-            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),-1)
+            cv2.imshow(ALERT_WINDOW,black);
 
-        cv2.imshow(ALERT_WINDOW,heir);
 
         cv2.waitKey(50)
-        fps.update()
+        # fps.update()
 
 
     fps.stop()
