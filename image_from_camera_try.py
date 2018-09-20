@@ -245,26 +245,24 @@ def main():
         heir = np.zeros((100,200),np.uint8);
         heir = cv2.cvtColor(heir, cv2.COLOR_GRAY2RGB)
 
-        x2=10
-        y2=20
-        w2=30
-        h2=40
+        x2=0
+        y2=0
+        w2=300
+        h2=300
         if hoge[0] + hoge[1] + hoge[2] + hoge[3] > hoge[4] + hoge[5] + hoge[6] + hoge[7]:
             print('不利')
             cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,255),5)
         elif  hoge[0] + hoge[1] + hoge[2] + hoge[3] < hoge[4] + hoge[5] + hoge[6] + hoge[7]:
             print('有利')
-            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,255,0),5)
+            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,255,0),-1)
         elif is_opening_map(gray):
             print('マップ閲覧中:不明')
-            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),5)
+            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),-1)
         else:
             print('同率')
-            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),5)
+            cv2.rectangle(heir,(x2,y2),(x2+w2,y2+h2),(0,0,0),-1)
 
         cv2.imshow(ALERT_WINDOW,heir);
-
-
 
         cv2.waitKey(50)
         fps.update()
