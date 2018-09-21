@@ -241,7 +241,7 @@ def main():
     cv2.namedWindow(ORG_WINDOW_NAME, cv2.WINDOW_NORMAL)
     cv2.namedWindow(ALERT_WINDOW, cv2.WINDOW_NORMAL)
 
-    end_flag = False
+    end_flag = True
     while end_flag:
         end_flag, c_frame = cap.read()
         gray = cv2.cvtColor(c_frame, cv2.COLOR_BGR2GRAY)
