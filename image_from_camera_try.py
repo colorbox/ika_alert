@@ -240,6 +240,7 @@ def main():
     # ウィンドウの準備
     cv2.namedWindow(ORG_WINDOW_NAME, cv2.WINDOW_NORMAL)
     cv2.namedWindow(ALERT_WINDOW, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(ALERT_WINDOW, 600, 600)
 
     end_flag = True
     while end_flag:
