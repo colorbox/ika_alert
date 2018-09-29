@@ -214,11 +214,13 @@ def main():
     DEVICE_ID = 1
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("-v", "--video", required=True,
-	help="path to input video file")
+    ap.add_argument("-v", "--video", required=False, help="path to input video file")
     args = vars(ap.parse_args())
 
-    cap = cv2.VideoCapture(DEVICE_ID)
+    if args["video"]:
+        cap = cv2.VideoCapture(args["video"])    
+    else:
+        cap = cv2.VideoCapture(DEVICE_ID)
     fps = FPS().start()
 
     x=0
