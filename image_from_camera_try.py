@@ -215,12 +215,20 @@ def main():
 
     ap = argparse.ArgumentParser()
     ap.add_argument("-v", "--video", required=False, help="path to input video file")
+    ap.add_argument("-f", "--frame", required=False, help="load frames per second default is 1")
+    
     args = vars(ap.parse_args())
 
     if args["video"]:
         cap = cv2.VideoCapture(args["video"])    
     else:
         cap = cv2.VideoCapture(DEVICE_ID)
+
+    if args["frame"]:
+        frame = int(args["frame"])
+    else:
+        frame = 1
+   
     fps = FPS().start()
 
     x=0
@@ -246,7 +254,9 @@ def main():
 
     end_flag = True
     while end_flag:
-        end_flag, c_frame = cap.read()
+        for i in range(frame):
+            end_flag, c_frame = cap.read()
+
         gray = cv2.cvtColor(c_frame, cv2.COLOR_BGR2GRAY)
         if is_enemy_pinch(gray):
             hoge = calcurate_icon_status_enemy_pinch(c_frame)
